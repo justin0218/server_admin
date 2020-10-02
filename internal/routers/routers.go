@@ -17,7 +17,7 @@ func Init() *gin.Engine {
 		Origins:         "*",
 		Methods:         "GET, PUT, POST, DELETE",
 		RequestHeaders:  "*",
-		ExposedHeaders:  "",
+		ExposedHeaders:  "*",
 		Credentials:     true,
 		ValidateHeaders: false,
 	}))
