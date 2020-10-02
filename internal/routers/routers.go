@@ -16,7 +16,7 @@ func Init() *gin.Engine {
 	r.Use(cors.Middleware(cors.Config{
 		Origins:         "*",
 		Methods:         "GET, PUT, POST, DELETE",
-		RequestHeaders:  "Origin, Authorization, Content-Type,Uid",
+		RequestHeaders:  "Origin, Authorization, Content-Type,Uid,token",
 		ExposedHeaders:  "",
 		Credentials:     true,
 		ValidateHeaders: false,
