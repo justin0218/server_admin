@@ -31,6 +31,7 @@ func (s *AdminController) Login(c *gin.Context) {
 	ret, err := s.adminService.Login(req.Username, req.Password)
 	if err != nil {
 		resp.RespInternalErr(c, "账号或密码错误")
+		return
 	}
 	resp.RespOk(c, ret)
 	return
