@@ -61,6 +61,7 @@ func (s *BlogController) CreateBlog(c *gin.Context) {
 		resp.RespInternalErr(c, err.Error())
 		return
 	}
+	resp.RespOk(c, in)
 	return
 }
 
