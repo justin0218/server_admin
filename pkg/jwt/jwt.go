@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 	"strconv"
 	"time"
 )
@@ -49,4 +50,14 @@ func VerifyToken(token_string string) (uid int64, err error) {
 	}
 	uid = claims.Uid
 	return
+}
+
+func GetUid(c *gin.Context) int {
+	if val, ex := c.Get("uid"); ex {
+		if v, ok := val.(int64); ok {
+			return int(v)
+		}
+		return 0
+	}
+	return 0
 }

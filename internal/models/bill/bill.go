@@ -6,6 +6,7 @@ import (
 )
 
 type Bill struct {
+	Uid      int        `json:"uid"`
 	Note     string     `json:"note"`
 	Money    int        `json:"money"`
 	YearNum  int        `json:"year"`
@@ -35,8 +36,8 @@ func (s *BillModel) Create(in Bill) (ret Bill, err error) {
 	return
 }
 
-func (s *BillModel) List() (ret []Bill, err error) {
-	err = s.Db.Table(s.Name).Find(&ret).Error
+func (s *BillModel) List(uid int) (ret []Bill, err error) {
+	err = s.Db.Table(s.Name).Where("uid = ?", uid).Find(&ret).Error
 	if err != nil {
 		return
 	}
@@ -51,6 +52,7 @@ type SumBillData struct {
 }
 
 type CreateBillReq struct {
+	Uid   int    `json:"uid"`
 	Time  string `json:"time"`
 	Note  string `json:"note"`
 	Money int    `json:"money"`

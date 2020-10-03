@@ -18,9 +18,9 @@ func (s *BillService) Create(in bill.Bill) (ret bill.Bill, err error) {
 	return bill.NewBillModel(db).Create(in)
 }
 
-func (s *BillService) SumBill() (ret []bill.SumBillData, err error) {
+func (s *BillService) SumBill(uid int) (ret []bill.SumBillData, err error) {
 	db := api.Mysql.Get()
-	list, _ := bill.NewBillModel(db).List()
+	list, _ := bill.NewBillModel(db).List(uid)
 	sumMap := make(map[string]int)
 	for _, v := range list {
 		k := fmt.Sprintf("%d_%d", v.YearNum, v.MonthNum)

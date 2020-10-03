@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"server_admin/internal/models/bill"
 	"server_admin/internal/services"
+	"server_admin/pkg/jwt"
 	"server_admin/pkg/resp"
 	"time"
 )
@@ -19,6 +20,7 @@ func (s *BillController) Create(c *gin.Context) {
 		resp.RespParamErr(c, err.Error())
 		return
 	}
+	req.Uid = jwt.GetUid(c)
 	if req.Money <= 0 {
 		resp.RespParamErr(c)
 		return
@@ -39,6 +41,7 @@ func (s *BillController) Create(c *gin.Context) {
 		YearNum:  t.Year(),
 		MonthNum: int(t.Month()),
 		DayNum:   t.Day(),
+		Uid:      req.Uid,
 	})
 	if err != nil {
 		resp.RespInternalErr(c, err.Error())
@@ -49,7 +52,7 @@ func (s *BillController) Create(c *gin.Context) {
 }
 
 func (s *BillController) SumBill(c *gin.Context) {
-	ret, err := s.billService.SumBill()
+	ret, err := s.billService.SumBill(jwt.GetUid(c))
 	if err != nil {
 		resp.RespInternalErr(c, err.Error())
 		return
