@@ -57,7 +57,7 @@ func (s *BlogController) CreateBlog(c *gin.Context) {
 	}
 	err = s.blogService.Update(in)
 	if err != nil {
-		resp.RespInternalErr(c)
+		resp.RespInternalErr(c, err.Error())
 		return
 	}
 	return
