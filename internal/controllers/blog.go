@@ -55,6 +55,7 @@ func (s *BlogController) CreateBlog(c *gin.Context) {
 		resp.RespOk(c, ret)
 		return
 	}
+	in.Id = req.Id
 	err = s.blogService.Update(in)
 	if err != nil {
 		resp.RespInternalErr(c, err.Error())
