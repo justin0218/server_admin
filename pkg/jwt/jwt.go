@@ -54,10 +54,7 @@ func VerifyToken(token_string string) (uid int64, err error) {
 
 func GetUid(c *gin.Context) int {
 	if val, ex := c.Get("uid"); ex {
-		if v, ok := val.(int64); ok {
-			return int(v)
-		}
-		return 0
+		return int(val.(int64))
 	}
 	return 0
 }
