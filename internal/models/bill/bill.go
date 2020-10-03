@@ -48,3 +48,9 @@ type SumBillData struct {
 	Month_ int   `json:"month"`
 	Money  int64 `json:"money"`
 }
+
+type CreateBillReq struct {
+	Time  string `json:"time"`
+	Note  string `json:"note"`
+	Money int    `json:"money"`
+}

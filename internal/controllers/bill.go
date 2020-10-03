@@ -13,7 +13,7 @@ type BillController struct {
 }
 
 func (s *BillController) Create(c *gin.Context) {
-	req := bill.Bill{}
+	req := bill.CreateBillReq{}
 	err := c.BindJSON(&req)
 	if err != nil {
 		resp.RespParamErr(c, err.Error())
@@ -24,8 +24,13 @@ func (s *BillController) Create(c *gin.Context) {
 		return
 	}
 	var t time.Time
-	if req.Time == nil {
+	if req.Time == "" {
 		t = time.Now().Local()
+	}
+	t, err = time.ParseInLocation("2006-01-02 15:04:05", req.Time, time.Local)
+	if err != nil {
+		resp.RespParamErr(c, err.Error())
+		return
 	}
 	ret, err := s.billService.Create(bill.Bill{
 		Note:   req.Note,
