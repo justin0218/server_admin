@@ -5,6 +5,7 @@ import (
 	cors "github.com/itsjamie/gin-cors"
 	"server_admin/configs"
 	"server_admin/internal/controllers"
+	"server_admin/internal/middleware"
 	//"server_admin/internal/middleware"
 	//
 	//"server_admin/internal/routers/v1/ws"
@@ -31,9 +32,10 @@ func Init() *gin.Engine {
 	r.GET("/v1/admin/open/file/read", admin.FileRead)
 
 	blog := new(controllers.BlogController)
-	r.POST("/v1/admin/auth/blog/create", blog.CreateBlog)
-	r.GET("/v1/admin/auth/blog/list", blog.GetBlogList)
-	r.GET("v1/admin/auth/blog/detail", blog.Detail)
+	adminAuth := r.Group("/v1/admin/auth").Use(middleware.VerifyToken())
+	adminAuth.POST("/blog/create", blog.CreateBlog)
+	adminAuth.GET("/blog/list", blog.GetBlogList)
+	adminAuth.GET("/blog/detail", blog.Detail)
 
 	bill := new(controllers.BillController)
 	r.POST("/v1/admin/auth/account/bill/make", bill.Create)
