@@ -12,6 +12,7 @@ type BlogArticlesModel struct {
 
 type BlogArticle struct {
 	Id          int       `json:"id"`
+	Uid         int       `json:"uid"`
 	Name        string    `json:"name"`
 	Cover       string    `json:"cover"`
 	GoodNum     int       `json:"good_num"`
@@ -62,18 +63,19 @@ func (s *BlogArticlesModel) GetById(id int) (ret BlogArticle, err error) {
 	return
 }
 
-func (s *BlogArticlesModel) List(page, pageSize int) (ret []BlogArticle, total int, err error) {
+func (s *BlogArticlesModel) List(page, pageSize, uid int) (ret []BlogArticle, total int, err error) {
 	query := s.Db.Table(s.Name)
-	err = query.Order("created_at desc").Offset(page * pageSize).Limit(pageSize).Find(&ret).Error
+	err = query.Where("uid = ?", uid).Order("created_at desc").Offset(page * pageSize).Limit(pageSize).Find(&ret).Error
 	if err != nil {
 		return
 	}
-	err = query.Count(&total).Error
+	err = query.Where("uid = ?", uid).Count(&total).Error
 	return
 }
 
 type CreateBlogReq struct {
 	Id      int    `json:"id"`
+	Uid     int    `json:"uid"`
 	Type    int    `json:"type"`
 	Cover   string `json:"cover"`
 	Desc    string `json:"desc"`

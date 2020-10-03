@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"server_admin/internal/models/blog"
 	"server_admin/internal/services"
+	"server_admin/pkg/jwt"
 	"server_admin/pkg/resp"
 	"server_admin/pkg/upload"
 	"strconv"
@@ -45,6 +46,7 @@ func (s *BlogController) CreateBlog(c *gin.Context) {
 		HtmlTxtUrl: htmlTxtUrl,
 		Name:       req.Name,
 		Cover:      req.Cover,
+		Uid:        jwt.GetUid(c),
 	}
 	if req.Id == 0 {
 		ret, err := s.blogService.Create(in)
@@ -80,7 +82,7 @@ func (s *BlogController) GetBlogList(c *gin.Context) {
 		resp.RespParamErr(c, "分页最大不能超过500")
 		return
 	}
-	ret, err := s.blogService.List(pageInt, pageSizeInt)
+	ret, err := s.blogService.List(pageInt, pageSizeInt, jwt.GetUid(c))
 	if err != nil {
 		resp.RespInternalErr(c, err.Error())
 		return

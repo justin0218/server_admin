@@ -54,10 +54,10 @@ func (s *BlogService) Update(in blog.BlogArticle) (err error) {
 	return
 }
 
-func (s *BlogService) List(page, pageSize int) (ret blog.ListRes, err error) {
+func (s *BlogService) List(page, pageSize, uid int) (ret blog.ListRes, err error) {
 	db := api.Mysql.Get()
 	page--
-	ret.List, ret.Total, err = blog.NewBlogArticleModel(db).List(page, pageSize)
+	ret.List, ret.Total, err = blog.NewBlogArticleModel(db).List(page, pageSize, uid)
 	ret.Page = page + 1
 	ret.PageSize = pageSize
 	return
