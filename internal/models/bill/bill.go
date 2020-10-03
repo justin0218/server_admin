@@ -36,7 +36,7 @@ func (s *BillModel) Create(in Bill) (ret Bill, err error) {
 }
 
 func (s *BillModel) SumBill() (ret []SumBillData, err error) {
-	err = s.Db.Table(s.Name).Exec("select year_,month_,sum(money) as money from account_bills group by month_,year_ order by year_,month_").Find(&ret).Error
+	err = s.Db.Table(s.Name).Exec("select year_,month_,sum(money) as money from account_bills").Group("year_").Group("month_").Order("year_").Order("month_").Find(&ret).Error
 	if err != nil {
 		return
 	}
