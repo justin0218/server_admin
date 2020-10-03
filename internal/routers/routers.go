@@ -38,7 +38,7 @@ func Init() *gin.Engine {
 	adminAuth.GET("/blog/detail", blog.Detail)
 
 	bill := new(controllers.BillController)
-	r.POST("/v1/admin/auth/account/bill/make", bill.Create).Use(middleware.VerifyToken())
-	r.GET("/v1/admin/auth/account/bill/list", bill.SumBill).Use(middleware.VerifyToken())
+	adminAuth.POST("/account/bill/make", bill.Create)
+	adminAuth.GET("/account/bill/list", bill.SumBill)
 	return r
 }
