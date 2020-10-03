@@ -33,12 +33,12 @@ func (s *BillController) Create(c *gin.Context) {
 		return
 	}
 	ret, err := s.billService.Create(bill.Bill{
-		Note:   req.Note,
-		Money:  req.Money,
-		Time:   &t,
-		Year_:  t.Year(),
-		Month_: int(t.Month()),
-		Day_:   t.Day(),
+		Note:     req.Note,
+		Money:    req.Money,
+		Time:     &t,
+		YearNum:  t.Year(),
+		MonthNum: int(t.Month()),
+		DayNum:   t.Day(),
 	})
 	if err != nil {
 		resp.RespInternalErr(c, err.Error())

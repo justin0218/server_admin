@@ -6,12 +6,12 @@ import (
 )
 
 type Bill struct {
-	Note   string     `json:"note"`
-	Money  int        `json:"money"`
-	Year_  int        `json:"year_"`
-	Month_ int        `json:"month_"`
-	Day_   int        `json:"day_"`
-	Time   *time.Time `json:"time"`
+	Note     string     `json:"note"`
+	Money    int        `json:"money"`
+	YearNum  int        `json:"year"`
+	MonthNum int        `json:"month"`
+	DayNum   int        `json:"day"`
+	Time     *time.Time `json:"time"`
 }
 
 type BillModel struct {
@@ -22,7 +22,7 @@ type BillModel struct {
 func NewBillModel(db *gorm.DB) *BillModel {
 	return &BillModel{
 		Db:   db,
-		Name: "account_bills",
+		Name: "bills",
 	}
 }
 
@@ -35,8 +35,8 @@ func (s *BillModel) Create(in Bill) (ret Bill, err error) {
 	return
 }
 
-func (s *BillModel) SumBill() (ret []SumBillData, err error) {
-	err = s.Db.Table(s.Name).Exec("select year_,month_,sum(money) as money from account_bills").Group("year_").Group("month_").Order("year_").Order("month_").Find(&ret).Error
+func (s *BillModel) List() (ret []Bill, err error) {
+	err = s.Db.Table(s.Name).Find(&ret).Error
 	if err != nil {
 		return
 	}
@@ -44,9 +44,10 @@ func (s *BillModel) SumBill() (ret []SumBillData, err error) {
 }
 
 type SumBillData struct {
-	Year_  int   `json:"year"`
-	Month_ int   `json:"month"`
-	Money  int64 `json:"money"`
+	YearNum  int `json:"year"`
+	MonthNum int `json:"month"`
+	Money    int `json:"money"`
+	Dx       int `json:"dx"`
 }
 
 type CreateBillReq struct {
