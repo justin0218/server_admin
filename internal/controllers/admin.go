@@ -37,7 +37,13 @@ func (s *AdminController) Login(c *gin.Context) {
 	return
 }
 
+type tempUploadFile struct {
+	Errno int      `json:"errno"`
+	Data  []string `json:"data"`
+}
+
 func (s *AdminController) UploadFile(c *gin.Context) {
+	from := c.Query("from")
 	f, err := c.FormFile("editormd-image-file")
 	if err != nil {
 		resp.RespParamErr(c)
@@ -66,6 +72,12 @@ func (s *AdminController) UploadFile(c *gin.Context) {
 	url, err := upload.UploadFile(obj, fileBytes)
 	if err != nil {
 		resp.RespInternalErr(c, err.Error())
+		return
+	}
+	if from == "wang" {
+		res := tempUploadFile{}
+		res.Errno = 0
+		res.Data = []string{url}
 		return
 	}
 	mapRes := make(map[string]string)
