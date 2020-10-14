@@ -78,6 +78,7 @@ func (s *AdminController) UploadFile(c *gin.Context) {
 		res := tempUploadFile{}
 		res.Errno = 0
 		res.Data = []string{url}
+		c.JSON(http.StatusOK, res)
 		return
 	}
 	mapRes := make(map[string]string)
