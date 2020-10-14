@@ -51,6 +51,11 @@ type cfg struct {
 			MaxOpenConns int    `yaml:"maxOpenConns"`
 			MaxIdleConns int    `yaml:"maxIdleConns"`
 		} `yaml:"master"`
+		Mall struct {
+			Addr         string `yaml:"addr"`
+			MaxOpenConns int    `yaml:"maxOpenConns"`
+			MaxIdleConns int    `yaml:"maxIdleConns"`
+		} `yaml:"mall"`
 		AppRead struct {
 			Addr         string `yaml:"addr"`
 			MaxOpenConns int    `yaml:"maxOpenConns"`

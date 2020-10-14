@@ -37,6 +37,9 @@ func Init() *gin.Engine {
 	adminAuth.GET("/blog/list", blog.GetBlogList)
 	adminAuth.GET("/blog/detail", blog.Detail)
 
+	mall := new(controllers.MallController)
+	adminAuth.POST("/mall/goods/create", mall.CreateGoods)
+
 	bill := new(controllers.BillController)
 	adminAuth.POST("/account/bill/make", bill.Create)
 	adminAuth.GET("/account/bill/list", bill.SumBill)
