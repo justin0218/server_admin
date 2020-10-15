@@ -7,6 +7,7 @@ import (
 
 type Goods struct {
 	GoodsId   string    `json:"goods_id"`
+	Uid       int       `json:"uid"`
 	Name      string    `json:"name"`
 	Details   string    `json:"details"`
 	Price     int       `json:"price"`

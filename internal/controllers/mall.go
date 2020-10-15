@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"server_admin/internal/models/mall"
 	"server_admin/internal/services"
+	"server_admin/pkg/jwt"
 	"server_admin/pkg/resp"
 )
 
@@ -22,6 +23,7 @@ func (s *MallController) CreateGoods(c *gin.Context) {
 		resp.RespParamErr(c)
 		return
 	}
+	req.Uid = jwt.GetUid(c)
 	_, err = s.goodsService.Create(req)
 	if err != nil {
 		resp.RespParamErr(c)
